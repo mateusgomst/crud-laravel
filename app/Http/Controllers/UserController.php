@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Nette\Utils\Json;
@@ -56,19 +57,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        // $data = $request->validated();
-        // try {
-        //     $user = User::findById($id);
-        //     $user->fill($data);
-        //     $user->save();
-        //     return response()->json($user, 201);
-        // } catch (\Exception $ex) {
-        //     return response()->json([
-        //         'message' => 'Falha ao inserir usuário!'
-        //     ],400);
-        // }
+        $user = User::find($id);
+        if($user == null){
+            return response()->json([
+                'message' => 'Usuário não existe'
+                ], 404);
+        }
+
+        $data = $request->validated();
+        try {
+            $user->update($data);
+            return response()->json($user, 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'message' => 'Falha ao atualizar o usuário!'
+            ],400);
+        }
     }
 
     /**
@@ -76,6 +82,19 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if($user == null){
+            return response()->json([
+                'message' => 'Usuário não existe'
+                ], 404);
+        }
+        try {
+            $user->destroy($id);
+            return response()->json($user, 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'message' => 'Falha ao deletar o usuário!'
+            ],400);
+        }
     }
 }
