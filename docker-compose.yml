@@ -1,11 +1,10 @@
-version: "3.9"
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: laravel_app
+    user: "1000:1000"
     volumes:
       - .:/var/www
     ports:
