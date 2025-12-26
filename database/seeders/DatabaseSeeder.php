@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Produto;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,5 +22,7 @@ class DatabaseSeeder extends Seeder
         User::factory(8)->create([
             'date_birthday' => Carbon::now()->subYear(20)->format('Y-m-d')
         ]);
+
+        Produto::factory(20)->create();
     }
 }
