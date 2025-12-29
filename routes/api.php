@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,3 +13,5 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/users', [UserController::class, 'store']);
 
 Route::apiResource('/users', UserController::class);
+Route::apiResource('/produtos', ProdutoController::class);
+Route::put('produtos/estoque/{id}', [ProdutoController::class, 'updateEstoque']);
